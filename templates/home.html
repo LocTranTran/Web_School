@@ -1,108 +1,88 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 {% block title %}Trang chủ{% endblock %}
-{% block contend %}
+{% block content %}
 <div class="">
     <div class="container-lg">
         <div class="row">
             <!-- Các tin tức tâm điểm  -->
-            <p class="p-0 m-0">Tiêu điểm</p>
-            <marquee class="p-0 m-0 " behavior="scroll" direction="left" scrollamount="6">
-                <p class="p-0 m-0 ">Chữ chạy trong HTML</p>
+            <h5 class="bow">
+                <p class="ps-3">Tiêu Điểm</p>
+                <div class="bows"> </div>
+            </h5>
+
+            <marquee class="p-0 m-0 " behavior="scroll" direction="left" scrollamount="8">
+                {% for post in posts %}
+    
+                <a class="text-decoration-none" href="{% url 'post_detail' post_id=post.id %}"><b class="p-0 m-0 text-danger ">{{post.title }} &nbsp;&nbsp;&nbsp;&nbsp;</b></a>
+                {% endfor %}
             </marquee>
-            <div class=" responsive accordion gap-2 shadow m-2 rounded">
-                <img class="img-responsive" src="https://via.placeholder.com/150" alt="">
+            {% for post in posts %}
+            {% if post.category == 'TD' or post.category == 'HD' %}
+            <a class="text-decoration-none responsive accordion gap-2 shadow m-2 rounded"
+                href="{% url 'post_detail' post_id=post.id %}">
+                <img class="img-responsive" src="{{ post.image.url }}" alt="">
                 <div class="p-2">
-                    <h3 class="">Tiêu đề</h3>
-                    <p class="">Thời gian</p>
-                    <h5 class="">nội dung</h5>
+                    <h4 class=""><b>{{ post.title }}</b></h4>
+                    <i style="font-size:0.8rem">{{ post.timestamp|date:"d/m/Y" }}</i>
+                    <!-- <h6 class="">{{ post.content }}</h6> -->
                 </div>
-            </div>
-            <div class=" responsive accordion gap-2 shadow m-2 rounded">
-                <img class="img-responsive" src="https://via.placeholder.com/150" alt="">
-                <div class="p-2">
-                    <h3 class="">Tiêu đề</h3>
-                    <p class="">Thời gian</p>
-                    <h5 class="">nội dung</h5>
-                </div>
-            </div>
+            </a>
+            {% endif %}
+            {% endfor %}
         </div>
         <div class="row">
             <!-- Các tin tức tâm điểm  -->
-            <p class="p-0 m-0">Hoạt động</p>
-            <div class=" ">
-                <div class="responsive col d-flex accordion gap-2 shadow m-2 rounded">
-                    <img class="" src="https://via.placeholder.com/300" alt="">
-                    <div class="p-2 ">
-                        <h3 class="">Tiêu đề</h3>
-                        <p class="">Thời gian</p>
-                        <h5 class="">nội dung</h5>
-                    </div>
+            <h5 class="bow">
+                <p class="ps-3">Hoạt Động</p>
+                <div class="bows"> </div>
+            </h5>
+            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div class="carousel-inner" style="max-height:500px; min-height:200px;">
+
+                    {% for post in posts %}
+                    <a href="{% url 'post_detail' post_id=post.id %}" class="carousel-item active" data-bs-interval="10000">
+                        <div class="responsive col d-flex accordion gap-2 m-2 rounded  ">
+                            <img class="img-responsive " style="min-height:350px; width: 100%;"
+                                src="{{ post.image.url }}" alt="">
+                            <div class=" carousel-caption  d-md-block text-white rounded"
+                                style=" background-color: rgba(128, 126, 126, 0.7);">
+                                <h4 class=""><b>{{ post.title }}</b></h4>
+                                <i style="font-size:0.8rem">{{ post.timestamp|date:"d/m/Y" }}</i>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="prev">
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="next">
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <div class="row">
-                <div class="col ">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
+            <div class="row d-flex ">
+                {% for post in posts %}
+                <div class="col-lg-4 col-md-12 p-0">
+                    <a href="{% url 'post_detail' post_id=post.id %}" class="d-lg-flex flex-column accordion border-1 p-2 rounded">
+                        <img class="img-fluid img" src="{{post.image.url}}" alt="">
                         <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
+                            <b class="">{{post.title}}</b>
+                            <i style="font-size:0.8rem">{{ post.timestamp|date:"d/m/Y" }}</i>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col ">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
-                        <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col ">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
-                        <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col ">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
-                        <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
-                        <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="  d-flex flex-column accordion shadow m-2 p-2 rounded">
-                        <img class="" src="https://via.placeholder.com/150" alt="">
-                        <div class="p-2 d-flex flex-column align-items-start">
-                            <h5 class="">Tiêu đề</h5>
-                            <p class="">Thời gian</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="row">
             <!-- Các tin tức tâm điểm  -->
             <p class="p-0 m-0">Sinh viên 5 tốt</p>
 
-            <div class="  d-flex ">
-                <div class=" col-6 d-lg-flex responsive5 accordion gap-2 shadow m-2 rounded">
+            <div class=" responsive ">
+                <div class=" col d-lg-flex responsive5 accordion gap-2 shadow m-2 rounded">
                     <img class="img-responsive" src="https://via.placeholder.com/150" alt="">
                     <div class="p-2">
                         <h3 class="">Tiêu đề</h3>
@@ -111,7 +91,7 @@
                         <button class="btn btn-outline-secondary w-100 h-25"> Chi tiết</button>
                     </div>
                 </div>
-                <div class="col-6 accordion gap-2 shadow m-2 rounded">
+                <div class="col accordion gap-2 shadow m-2 rounded">
                     <div class="p-2">
                         <h3 class="">Tiêu đề</h3>
                         <p class="">Thời gian</p>
